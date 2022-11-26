@@ -9,8 +9,6 @@ export class CanvasContextService {
   private static canvasElementRef: ElementRef<HTMLCanvasElement>;
   private static context: CanvasRenderingContext2D;
 
-  public pixiApp:any;
-
   setCanvasElementRef(game: CanvasDirective, contextType: string) {
     CanvasContextService.canvasElementRef = game.htmlCanvasElement;
     CanvasContextService.context = <CanvasRenderingContext2D>(
