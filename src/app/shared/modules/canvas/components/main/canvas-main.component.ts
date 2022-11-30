@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 
 /*
 * do your canvas work here
@@ -8,20 +8,29 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./canvas-main.component.html",
   styleUrls: ["./canvas-main.component.scss"],
 })
-export class CanvasMainComponent implements OnInit {
+export class CanvasMainComponent {
   public CANVAS_WIDTH: number = 528;
   public CANVAS_HEIGHT: number = 528;
   private context: any;
+  canvas: any;
 
-  getContext(context: Event) {
-    this.context = context;
+  getContext(c: any) {
+    this.context = c.ctx;
+    this.canvas = c.canvas;
   }
 
   constructor() {}
 
-  ngOnInit(): void {}
   ngAfterViewInit() {
     this.drawACircle();
+    this.canvas.onmouseup = () => {
+      alert('hi');
+    }
+    this.canvas.onmousedown = () => {}
+    this.canvas.onmousemove = () => {}
+    this.canvas.addEventListener('click', (event: any) => {});
+    this.canvas.addEventListener('mousedown', (event: { clientX: number; clientY: number; }) => {});
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/mousedown_event
   }
 
   drawACircle(): void {

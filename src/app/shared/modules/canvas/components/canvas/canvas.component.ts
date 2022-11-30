@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { CanvasDirective } from '../../directives/canvas.directive';
 import { CanvasContextService } from '../../services/context-element.service';
 
@@ -18,16 +18,19 @@ export class CanvasComponent implements OnInit, OnChanges {
 
   @ViewChild(CanvasDirective, {static: true}) appcanvas!: CanvasDirective;
   private context!: CanvasRenderingContext2D;
+  private native_element!: ElementRef<any>;
 
   constructor(private canvasContext:CanvasContextService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
+    this.native_element = this.appcanvas.htmlCanvasElement;
   }
 
   private initContext():void{
     this.context = this.canvasContext.initCanvas(this.appcanvas, '2d');
-    this.appCanvas.emit(this.context);
+    const canvas = this.native_element.nativeElement;
+    this.appCanvas.emit({ctx:this.context,canvas:canvas});
   }
 
   ngOnInit(): void {
